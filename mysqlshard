@@ -1,0 +1,29 @@
+http://www.cnblogs.com/hb_cattle/archive/2011/10/12/2208910.html
+http://www.cnblogs.com/qqloving/p/3414999.html
+http://blog.csdn.net/bluishglc/article/details/7710738
+create table `tp`(
+	`id`   int unsigned not null,
+	`name` varchar(20) not null,
+	`time` datetime not null
+	primary key(id,time)
+)partition by range(YEAR(time))(
+	partition p0 values less than (2010),
+	partition p1 values less than (2015),
+	partition p2 values less than (2020),
+	partition p3 values less than maxvalue
+);
+
+alter table tp add partition (partition p4 values less than (2030));
+alter table tp drop partition p4;
+
+
+create table `xy'(
+   `id`  int unsigned not null auto_increment,
+   `name` varchar(20) not null,
+   `x_id` int unsigned  not null,
+   primary key(id,x_id)
+)partition by hash(x_id) partitions 4;
+
+alter table xy add partition partitions 4;
+alter table xy coalesce partition 2;
+
