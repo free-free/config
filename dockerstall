@@ -1,0 +1,22 @@
+ubuntu :
+	1.version>=14.04:
+		apt-get update 
+		apt-get install -y docker.io
+		ln -sf /usr/bin/docker.io /usr/local/bin/docker
+		sed -i '$acomplete -F _docker docker' /etc/bash_completion.d/docker.io
+	2.version<14.04:
+		apt-get update 
+		apt-get install linux-image-generic-lts-raring linux-headers-generic-lts-raring (update kernel)
+		reboot 
+		then follow  steps of version>14.04	
+		
+centos:
+	centos6:
+		yum -y install http://mirrors.yun-idc.com/epel/6/x86/epel-release-6-8.noarch.rpm
+		yum -y install docker-io
+	centos7:
+		yumm -y install docker
+	
+	start:
+		service docker start
+		chkconfig docker on
