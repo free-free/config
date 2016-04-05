@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>nginx upstream 分配方式</title>
+<meta http-equiv="content-type" content="text/html;charset=utf-8">
+<meta name="keyword"  content="nginx,upstream,weight,ip_hash,fair,url_hash">
+<style type="text/css">
+.it{
+ margin:20px auto;
+ width:600px;
+ border: 1px solid gray;
+ border-radius:5px;
+ padding:10px;
+ background-color:#cdcdcd;
+}
+h1{
+	text-align:center;
+	color:#6495ed;
+}
+body{
+	background-color:#f0f0f0;
+}
+</style>
+</head>
+<body >
+<div id="p">
+	<div><h1>nginx upstream 分配方式</h1></div>
+	<div class="it">
+	<h3>1.轮询（默认）</h3>
+	<p>每个请求按时间顺序逐一分配到不同的后端服务器，如果后端服务起down掉，能自动剔除。</p>
+	</div>
+	<div class="it">
+	<h3>2.weight</h3>
+	<p>指定轮询几率，weight和访问比率成正比，用于后端服务器性能不均的情况。
+	</p>
+	<p>
+	例如:<br/>
+	upstream bakend{<br/>
+	server 192.168.159.10 weight=10;<br/>
+	server 192.168.159.11 weight=10;<br/>
+	}
+	</p>
+	</div>
+	<div class="it">
+	<h3>3.ip_hash</h3>
+	<p>每个请求按访问ip的hash结果分配，这样每个访客固定一个后端服务器，可以解决session的问题。</p>
+	<p>例如:<br/>
+	upstream resinserver{<br/>
+	ip_hash;
+	server 192.168.159.10:8080;<br/>
+	server 192.168.159.10:8080;<br/>
+	}
+	</p>
+	</div>
+	<div class="it">
+	<h3>4.fair(第三方）</h3>
+	<p>按后端服务器的响应时间来分配请求，响应时间端的优先分配。</p>
+	<p>upstream resinserver{<br/>
+	server 192.168.0.101;<br/>
+	server 192.168.0.102;<br/>
+	fair;<br/>
+	}<br/>
+	</p>
+
+	</div>
+	<div class="it">
+	<h3>5.url_hash(第三方)</h3>
+	<p>
+	按访问url的hash结果来分配请求，使每个url定向到同一个后端服务器，后端服务器为缓存时比较有效。
+	</p>
+	<p>例如：在upstream中加入hash语句，server语句中不能写入weight等其他的参数，hash_method是最简单的hash算法。<br/>
+	upstream resinserver{<br/>
+	server 192.168.0.101;<br/>
+	server 192.169.0.102;<br/>
+	hash $request_uri;<br/>
+	hash_method crc32;<br/>
+	}<br/>
+	</p>
+	</div>
+	<div class="it">
+	<h3>Tips!!!</h3>
+	<p>upstream resinserver{定义负载均衡设备的ip及设备状态<br/>
+	ip_hash;<br/>
+	server 127.0.0.1:8000 down;<br/>
+	server 127.0.0.1L8080 weight=2;<br/>
+	server 127.0.0.1:6801;<br/>
+	server 127.0.0.1:6801;<br/>
+	}<br/>
+	</p>
+	<p>每个设备的状态的设置为：<br/>
+	1.down表示当前的server暂时不参与负载<br/>
+	2.weight默认为1，weight越大，负载的权重就越大<br/>
+	3.max_fails:允许请求失败的次数默认为1，当超过最大次数时，返回proxy_next_upstream模块定义的错误。	<br/>
+	4.fail_timeout:max_fails次失败后，暂停的时间。<br/>
+	5.backup:其他所有的非backup机器down或忙的时候，请求backup机器，所以这台机器压力会很轻。
+	nginx支持同时设置多组的负载均衡，用来给不同的server使用。<br/>
+	client_body_in_file_only 设置为on可以讲client post过来的数据记录到文件中用来做debug<br/>
+	client_body_temp_path 设置记录文件的目录，可以设置最多3层目录。<br/>
+	location 对URI进行匹配，可以进行重定向或者进行新的代理负载均衡。<br/>
+	</p>
+	</div>
+</div>
+</body>
+</html>
+
