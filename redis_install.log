@@ -1,0 +1,32 @@
+1.download redis(I download redis3.0.7 stable version)
+2.tar -xvf redis-3.0.7.tar.gz
+3.cd redis-3.0.7
+4.make && make install
+5.start redis by init script
+	1)cd redis-3.0.7/utils/
+	2)mv redis_init_script.tpl redis_6379.sh
+	3)vim redis_6379.sh
+		....edit it,add following to it:
+		EDISPORT=6379
+		EXEC=/usr/local/bin/redis-server
+		CLIEXEC=/usr/loca/bin/redis-cli
+		PIDFILE=/var/run/redis_${REDISPORT}.pid
+		CONF="/etc/redis/${REDISPORT}.conf"
+	4) cp redis_6379.sh /etc/init.d/redis_6379.sh
+6.config redis
+	1) mkdir /etc/redis/
+	2) mkdir /var/redis/
+	3) cd redis-3.0.7/
+	4) cp redis.conf /etc/redis/redis_6379.conf
+	5) vim /etc/redis/redis_6479.conf
+		.....edit it ,add following to it
+			daemonize yes
+			pidfile /var/run/redis_6379.pid
+			port 6379
+			dir /var/redis/6379
+7.update-rc.d redis_6479.sh defaults(start up redis when computer start)
+8.start redis
+	service redis_6379 start
+9.shutdown redis
+	redis-cli shutdown or kill redis
+

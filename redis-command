@@ -1,0 +1,130 @@
+shutdown
+string:
+	set xxx "DEDE"
+	get xxx
+	incr xxx #if key not exist,redis will set it to 1
+	incrby key 12
+	decr key
+	decrby key 21
+	incrbyfloat key 0.2
+	keys xxx
+	keys *  #regular expression(?,*,[],\x)
+	append key xxx
+	strlen key
+	mset k1 v1 k2 v2 ...
+	mget k1 k2
+	getbit key offset
+	setbit key offset value(0|1)
+	bitcount key   #count how many bit value is 1
+	bitcount key startbyte endbyte
+	bitop or resultkey key1 key2
+	bitop and resultlkey key1 key2
+	bitop not resultkey key1 
+	bitop xor resultkey key1 key2
+	exists key 
+	del   key1 key2 (DEL not support pattern)
+		... multi-del ==>redis-cli del 'redis-cli keys "user:*"'
+		... redis-cli keys "user:*"|xargs redis-cli del
+hash:
+	hset key field value
+	hget key field 
+	hmset key field1 value1 field2 value2 ....
+	hmget ke field1 field2...
+	hgetall key
+	hexists key field
+	hsetnx key field value #if specific key not exist,set it, otherwise do nothing
+	hincrby key field increment		
+	hdel key field1 field2
+	hkeys key #get field name
+	hvals key #get field value
+	hlen key  #get field numbers
+	
+list:
+	lpush key value1 value2 ....#push item into list from left
+	rpush key value1 value2 ....#push item into list from right
+	lpop key
+	rpop key		
+	llen key
+	lrange key start end #get item start with "start" and end with"end"
+	..ex lrange num -3 -1
+	     lrange num 1  8
+	     lrange num 0 -1  #get all items
+	lrem key count value #delete item who's value equal to 'value'
+		count>0 delete from left side
+		count<0 delete from right side
+		count=0 delete all
+	lindex key index
+	lset key index value
+	ltrim key start end #delete item except from "start" to "end"
+	LINSERT key AFTER|BEFORE pivot value
+ 	rpoplpush source destination
+set:
+	sadd key member1 member2 ..	
+	srem key memeber1 memeber2...
+	smembers key #all get items in set key
+	sismember key memeber #check whether member is exists in set key
+	sdiff key1 key2 ...#((key1-key2)-key3)-...keyn
+	sinter key1 key2 ....	#key1&key2&key3.....keyn	
+	sunion key1 key2 key3 ....#key1|key2|key3....
+	scard  key #count itme numbers in set key
+	sdiffstore destination key1 key2 .....
+	sinterstore destination key1 key2	
+	sunionstore  destination key1 key2...
+	srandmember key count
+	spop key
+sort set:
+	zadd key score1 member2 score2 member2...
+	zscore key member 
+	zrange key startindex stopindex [withscores]
+	zrevrange key startindex stopindex [withscores]
+	zrangebyscore key minscore maxscore  [withscores]	[limit offset count]
+	zrevrangebyscore key maxscore minscore [withscores] [limit offset count]
+	zincrby key increment member
+	zcard  key
+	zcount key minscore maxscore
+	zrem key member1 member2
+	zremrangebyrank key startindex stopindex
+	zremrangebyscore key min max
+	zrank key member 
+	zrevrank key member
+	zinterstore result numkeys key1 key2 [aggragate sum|min|max] sum default
+	[ weights 1 0.1]
+	zunionstore	
+
+type  key #return options:string,hash,list,set,zset
+config set loglevel warning
+config get loglevel
+config get *
+select *  (0-16) #select dict ,default dict is zero dict
+	... select 1 
+flushall #delete all dict's data of a redis server instance
+
+transaction:
+	multi #start transaction
+	exec #end transaction
+		..ex
+			>>> multi
+			>>> sadd "user:1:following" 2
+			>>> sadd "user:2:follower" 1
+			>>> exec
+	watch key
+expire key seconds
+persist key
+pexire key miliseconds
+ttl key
+pttl key
+sort key(list,set orderset)  [ALPHA] [DESC |ASC] [LIMIT OFFSET COUNT]
+sort tag:ruby:posts BY posts:*->time DESC 
+SORT tag:ruby:posts BY post:*->time DESC GET post:*->title GET post:*->content
+GET #(get id) [STORE resultset]
+brpop key1 key2 ... timeout
+blpop key1 key2 ...  timeout #priority: key1>key2
+publish channel msg
+subscribe channel1 channel2 ...
+unsubcribe channel1 channel2...
+psubscribe (pattern subscribe) pattern 
+punsubscribe pattern1 pattern2
+OBJECT ENCODING key
+
+slowlog get
+monitor
