@@ -1,0 +1,125 @@
+#!/bin/bash
+date 
+dt=$(date "+%Y/%m/%d %H:%M:%S %w") #<===> dt=`date "+%Y/%m......."`
+echo $dt
+
+
+#echo "please input a number"
+read -p  "please input a number " a
+#echo "please input another number"
+read -p "please input another number " b
+sum=$(($a+$b))
+echo "sum is $sum "
+
+
+echo "first parameter $1" #first parameter
+echo "second paramter $2" #seoncd parameter 
+echo "#  $#"  # parameter number
+echo "0 $0"   # filename
+
+read -p "please input your score " c
+#if ((c<60)); then
+#	echo "you didn't pass the exam."
+#elif ((c>60)) && ((c<85)); then
+#	echo "Very Good! Your score is very high."
+#else
+#	echo "Good! You pased the exam."
+#fi
+if [ $c -lt 60 ]; then
+	echo "you didn't pass the exam."
+elif [ $c -gt 60 ] && [ $c -lt 85 ]; then
+	echo "Good! You passed the exam."
+else
+	echo "Very Good! Your score is very high."
+fi
+
+if [ -e "/tmp" ]; then #check directoru or file existen"
+	echo "/tmp is exist"
+fi
+
+if [ -d "/tmp" ]; then #check /tmp is a directory and existen
+	echo "/tmp is directory and exists"
+fi
+
+if [ -f "3232" ];then #check file
+	echo "3232 is a file"
+fi
+
+if [ -r "client.py" ];then #check readable permission
+	echo "client.py is readable"
+fi
+
+if [ -w "client.py" ];then #check writable permission
+	echo "client.py is writable"
+fi
+
+if [ -x "client.py" ];then #check executable permisson
+	echo "client.py is executable"
+fi
+
+read -p "read command: " command
+case $command in 
+	"start")
+	echo "starting......"
+	;;
+	"stop")
+	echo "stopping....."
+	;;
+	"reload")
+	echo "reloading....."
+	;;
+	*)
+	echo "any......"
+	;;
+esac
+
+read -p "please input a number" number
+number=$(($number%2))
+case $number in 
+	0)
+		echo "number is even"
+	;;
+	1)
+		echo "number is ood"
+	;;
+esac
+
+for i in $(seq 1 5);do
+	num=$(($i%2))
+	if [ $num -eq 0 ];then
+		echo " $i is even"
+	else
+		echo " $i is odd"
+	fi
+done
+
+for i in `ls`;do
+	echo $i
+done
+for i in 1 3 4 5 6;do
+	echo $i
+done
+a=10
+while [ $a -ge 1 ];do
+	echo $a
+	a=$(($a-1))
+done
+
+#master script application
+#while :;do
+#	echo "jello"
+#done
+
+
+sum()
+{
+	sum=$(($1+$2))
+	echo $#
+	echo $0
+	echo $* 
+	echo $@
+	echo $?
+	echo $sum
+}
+
+sum $1 $2
