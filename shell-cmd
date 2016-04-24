@@ -1,4 +1,5 @@
 #!/bin/bash
+declare INPUT_TEXT="" #define a variable
 date 
 dt=$(date "+%Y/%m/%d %H:%M:%S %w") #<===> dt=`date "+%Y/%m......."`
 echo $dt
@@ -113,7 +114,8 @@ done
 
 sum()
 {
-	sum=$(($1+$2))
+	local sum=$(($1+$2)) #declare local varaible
+	#sum=$(($1+$2))
 	echo $#
 	echo $0
 	echo $* 
