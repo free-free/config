@@ -82,8 +82,11 @@
 			On_IPurple='\033[0;105m'  # Purple
 			On_ICyan='\033[0;106m'    # Cyan
 			On_IWhite='\033[0;107m'   # White	
-			NOTE:You need to replace digit 0 with 1 to get light color version
 
+			**NOTE:You need to replace digit 0 with 1 to get light color version,
+			also,you can use three method: start and reset
+				'\e[0;32m'(bash)   or '\x1b[0;32m'(ascii) or '\033[0;32m]' ===> :start
+				'\e[m]'(bash)	   or '\x1b[m'(ascii) or '\033[m'          ===> :stop
 	
 		$PS1 #your shell prompt variable
 		\e[m #stop color scheme
