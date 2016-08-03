@@ -1,0 +1,53 @@
+tmux new -s session_name  // create a named session
+tmux new -s  session_name -d -n first_window_name 
+tmux ls    // list all session  
+tmux attach // connect to  session
+tmux attach -t session_name  // connect to specific session 
+tmux kill-session -t session_name // kill a session 
+prefix d  // seperate session   
+prefix c  // create new window
+prefix s  // list sessions 
+prefix ,  // rename window
+prefix n // switch to next window
+prefix p // switch to previous window
+prefix [0-9]+ // switch to nth window
+prefix f  //find a named window
+prefix w //show window list
+prefix & //close current window
+
+prefix % // seperate current window to two vertical sub panes
+prefix " //seperate  current window to two hizontal sub panes
+prefix o //move cursor betwwen sub panes
+prefix x // close current pane
+prefix [(UP)|(DOWN)|(LEFT)|(RIGHT)] //move cursor betwwen sub panes
+prefix(long press) [(UP)|(DONW)|(LEFT)|(RIGHT)] //change width ratio and height ratio betwwen sub panes
+exit // close a panes
+prefix : // open tmux command line mode,it's similar to vim
+source-file ~/.tmux.conf // reload conf file in tmux command line mode
+
+
+
+prefix [ // enter copy mode, press 'enter' exit copy mode
+Ctrl-b // page up,when in copy mode
+Ctrl-f // page down when in copy mode
+space + [h|j|k|l|up|down|left|right] //select copy text ,and press 'enter' to copy selected text
+prefix ] // paste copyed text
+prefix : capture-pane // copy whole pane 
+tmux show-buffer / prefix : show-buffer // show  copy-paste buffer
+tmux capture-pane && tmux save-buffer buffer.txt //save buffer to file
+prefix : capture-pane ;save-buffer buffer.txt //save buffer to file
+tmux list-buffers / prefix : list-buffers
+prefix : choose-buffer // choose text in buffer to paste
+
+#H	本地主机的主机名
+#h	本地主机的主机名，没有 domain
+#F	当前窗口的标签
+#I	当前窗口的索引
+#P	当前面板的索引
+#S	当前会话的名称
+#T	当前窗口的标题
+#W	当前窗口的名称
+##	一个 # 符号
+#(shell-command)	shell 命令的第一行输出
+#[attributes]	要改变的颜色或属性
+
