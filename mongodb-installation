@@ -1,0 +1,12 @@
+"""
+echo never >/sys/kernel/mm/transparent_hugepage/enabled
+echo never >/sys/kernel/mm/transparent_hugepage/defrag
+/opt/mongodb3.2.10/bin/mongod --config /etc/mongodb/mongodb.conf""" add to /etc/rc.local
+
+""" ulimit -f unlimited
+    ulimit -v unlimited
+    ulimit -v unlimited
+    ulimit -n 64000
+    ulimit -m unlimited
+    ulimit -u 64000
+""" add to .bash_profile
