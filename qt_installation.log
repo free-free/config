@@ -1,0 +1,35 @@
+email:19941222hb@gmail.com
+passwd:HUANGbiao526114
+
+
+step1:
+       wget http://download.qt.io/official_releases/qt/5.7/5.7.0/qt-opensource-linux-x64-5.7.0.run
+       chmod a+x qt-opensource-linux-x64.*.run
+       ./qt-opensource-linux-x64*.run 
+step2:install g++
+       sudo apt-get installl build-essential
+
+step3:install generic font configuration library-runtime
+       sudo apt-get install libfontconfig1
+
+step4:install opengl libraries
+       sudo apt-get install mesa-common-dev
+       sudo apt-get install libglu1-mesa-dev -y
+step5:create desktop 
+"
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Type=Application
+Name=QtCreator
+Comment=QtCreator
+NoDsiplay=true
+Exec=(Install folder of QT)/Tools/QtCreator/bin/qtcreator %f
+Icon=(Install folder of QT)/5.4/Src/qtdoc/doc/images/landing/icon_QtCreator_78x78px.png
+Name[en_US]=Qt-Creator
+" save as Qt-Creator.desktop and place it in home .local/share/applications
+  edit 'defaults.list' in the same directory.ADD the following line.
+      text/qtcreator=Qr-Creator.desktop
+  open file mimieapps.list and check if the following line is present
+       application/vnd.nokia.qt.qmakeprofile=qtcreator.desktop
+  sudo update-mine-database /usr/share/mime
