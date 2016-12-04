@@ -1,0 +1,74 @@
+# change side bar position
+gsettings set com.canonical.Unity.Launcher launcher-position Bottom
+
+# install cinnamon
+add-apt-repository ppa:embrosyn/cinnamon
+sudo apt-get update
+sudo apt-get install cinnamon
+
+# install typewriting
+sudo add-apt-repository ppa:fcitx-team/nightly
+sudo apt-get update
+sudo apt-get install fcitx
+sudo apt-get install fcitx-config-gtk
+sudo apt-get install fcitx-table-all
+sudo apt-get install im-switch
+//detail url:http://www.linuxdiyf.com/linux/22075.html
+
+
+# install netease music
+libqt5x11extras5 
+gstreamer1.0-plugins-bad
+gstreamer1.0-plugins-ugly
+libqt5multimedia5-plugins
+libqt5multimedia5-plugins
+libqt5libqgtk2
+
+# install openssl
+sudoa apt-get install openssl libssl-dev
+
+
+# install nodejs
+//detail:https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions
+
+//v6.x
+curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+//or 
+//curl -SL https://deb.nodesource.com/setup_6.x -o nodesource_bash.sh
+// sudo bash nodesource_bash.sh
+sudo apt-get install -y nodejs
+
+//v7.x
+curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
+sudo apt-get install -y nodejs
+
+sudo apt-get install build-essential
+#nodejs package install
+
+npm link packagename
+npm init //create package.json
+npm adduser 
+npm whoami
+npm pulish
+npm unpulish
+
+npm install -g n //multi-version support 
+npm install -g supervisor // supervisor script.js
+npm install -g node-inspector// node debug-brk=5858 script.js and visit http://localhost:8080/debug?port=5858
+
+
+
+node debug script.js //debuging
+node --debug-brk script.js //default port=5858
+node --debug=4000 script //remote debuging
+node debug 127.0.0.1:5858
+
+
+
+# config sudo log
+
+touch /var/log/sudo.log
+echo "local2.debug  /var/log/sudo.log" >>/etc/rsyslog.conf
+echo "Defaults logfile=/var/log/sudo.log" >>/etc/sudoers
+systemctl restart rsyslog
+
